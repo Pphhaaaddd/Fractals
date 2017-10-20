@@ -16,8 +16,8 @@ void keyPressed() {
 }
 
 void draw() {
-  treeAngle = map(mouseX, 0, width, 0.01, PI/2);
-  multiplier = map(mouseY,0,height,0.1,0.9);
+  treeAngle = map(mouseX, 0, width, 0.01, PI);
+  multiplier = map(mouseY, 0, height, 0.1, 0.9);
 
   background(255);
   tree = new ArrayList<Branch>();
@@ -35,17 +35,15 @@ void draw() {
 }
 
 void generate() {
-  ArrayList<Branch> next = tree;
-  int size = next.size();
-  for (int i=0; i<size; i++) {
+  for (int i=tree.size()-1; i>=0; i--) {
     // Get the parameters from previous
     PVector start = tree.get(i).nextStart();                 
     float len = tree.get(i).nextLen();
     float angleA = tree.get(i).nextAngleA();
     float angleB = tree.get(i).nextAngleB();
 
-    next.add(new Branch(start, len, angleA));
-    next.add(new Branch(start, len, angleB));
+    tree.add(new Branch(start, len, angleA));
+    tree.add(new Branch(start, len, angleB));
   }
-  tree = next;
+
 }
