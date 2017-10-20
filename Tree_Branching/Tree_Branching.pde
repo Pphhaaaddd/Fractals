@@ -16,8 +16,8 @@ void keyPressed() {
 }
 
 void draw() {
-  treeAngle = map(mouseX, 0, width, 0, PI/2);
-  multiplier = map(mouseY,0,height,0,0.9);
+  treeAngle = map(mouseX, 0, width, 0.01, PI/2);
+  multiplier = map(mouseY,0,height,0.1,0.9);
 
   background(255);
   tree = new ArrayList<Branch>();
