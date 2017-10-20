@@ -11,8 +11,11 @@ void setup() {
 }
 
 void keyPressed() {
-  if (key==' ')
+  if (key=='a')
     num++;
+  if (key=='z' && num>1)
+    num--;
+  println(num);
 }
 
 void draw() {
@@ -23,27 +26,35 @@ void draw() {
   tree = new ArrayList<Branch>();
   PVector start = new PVector(width/2, height);
   float len = 200;
-  tree.add(new Branch(start, len, 0));
+  tree.add(new Branch(start, len, 0, 15));
 
   strokeWeight(2);
-  for (int i=0; i<num; i++) {
-    generate();
+  for (int i=0; i<num-1; i++) {
+    generate(i);
   }
   for (Branch t : tree) {
     t.display();
   }
 }
 
-void generate() {
-  for (int i=tree.size()-1; i>=0; i--) {
+void generate(int count) {
+  for (int i=tree.size()-1; i>=pow(2,count)-1; i--) {
     // Get the parameters from previous
     PVector start = tree.get(i).nextStart();                 
     float len = tree.get(i).nextLen();
+    float thickness = tree.get(i).nextThickness();
     float angleA = tree.get(i).nextAngleA();
     float angleB = tree.get(i).nextAngleB();
 
-    tree.add(new Branch(start, len, angleA));
-    tree.add(new Branch(start, len, angleB));
-  }
+    Branch A = new Branch(start, len, angleA, thickness);
+    Branch B = new Branch(start, len, angleB, thickness);
 
+    if (i > 50) {
+      A.addFruit();
+      B.addFruit();
+    }
+
+    tree.add(A);
+    tree.add(B);
+  }
 }
